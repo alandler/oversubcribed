@@ -22,11 +22,10 @@
       </header> -->
     <h1 class="display-1">What's good</h1>
     <div>
-        <ul>
         {%for item in data%}
-            <li>{{item.content}}</li>
+            <label for={{item.content}}>{{item.content}}</label>
+            <input type="text" id={{item.id}} name={{item.content}}><br><br>
         {% endfor %}
-        </ul>
     </div>
 </body>
 </html>
