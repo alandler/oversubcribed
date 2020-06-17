@@ -9,18 +9,18 @@
 </head>
 
 <body>
+    <!-- <header>
+        <div class="container">
+          <h1 class="logo">First Web App</h1>
+          <strong><nav>
+            <ul class="menu">
+              <li><a href="{{ url_for('home') }}">Home</a></li>
+              <li><a href="{{ url_for('about') }}">About</a></li>
+            </ul>
+          </nav></strong>
+        </div>
+      </header> -->
     <h1 class="display-1">Welcome to the TimeTracker beta</h1>
-    <div id = "append"></div>
-    <script>
-        const request = new Request('http://127.0.0.1:5000/')
-        console.log(request)
-        var response;
-        console.log(response)
-        fetch(request)
-            .then(response => response.blob());
-        
-        var textnode = document.createTextNode(response)
-        document.getElementById("append").appendChild(textnode)
-    </script>
+    <p>I don't know what I'm doing at all.</p>
 </body>
 </html>
