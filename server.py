@@ -21,7 +21,8 @@ def update_database():
     for item in api.state['items']:
         one = item["id"]
         c.execute('''INSERT OR REPLACE INTO timetable (item_id, time_estimate) \
-            VALUES (?, ?, ?, ?, ?, 0);''', (one,))
+            VALUES (?, 0);''', (one,))
+    
     conn.commit()
     conn.close()
 
@@ -29,18 +30,18 @@ update_database()
 
 @app.route('/')
 def home():
-    data = retrieve_from_database()
+    return render_template("home.html", data = api.state['items'], times = retrieve_times())
 
-def retrieve_from_database():
+def retrieve_times():
     conn = sqlite3.connect(db) 
     c = conn.cursor()  
     results = c.execute('''SELECT item_id, time_estimate FROM timetable;''').fetchall()
-    out = "Items"
+    obj = []
     for x in results:
-        out+=str(x)+"\n"
+        obj.append({"id":x[0], "time_estimate":x[1]})
     conn.commit() # commit commands
     conn.close() # close connection to database
-    return out
+    return obj
     
 @app.route('/about')
 def about():
