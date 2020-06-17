@@ -32,7 +32,8 @@ update_database()
 def home():
     return render_template("home.html", data = api.state['items'], times = retrieve_times())
 
-def retrieve_times():
+@app.route('/get_times',methods=['GET', 'POST'])
+def get_times():
     conn = sqlite3.connect(db) 
     c = conn.cursor()  
     results = c.execute('''SELECT item_id, time_estimate FROM timetable;''').fetchall()
@@ -53,3 +54,12 @@ def login():
         return "GET"
     else:
         return "POST"
+
+@app.route('/time', methods=['GET', 'POST'], item_id)
+def time():
+    if method == 'GET':
+        conn = sqlite3.connect(db) 
+        c = conn.cursor()  
+        results = c.execute('''SELECT item_id, time_estimate FROM timetable;''').fetchall()
+    else:
+        pass
