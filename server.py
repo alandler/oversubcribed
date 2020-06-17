@@ -30,7 +30,7 @@ update_database()
 
 @app.route('/')
 def home():
-    return render_template("home.html", data = api.state['items'], times = retrieve_times())
+    return render_template("home.html", data = api.state['items'], times = get_times())
 
 @app.route('/get_times',methods=['GET', 'POST'])
 def get_times():
@@ -55,11 +55,15 @@ def login():
     else:
         return "POST"
 
-@app.route('/time', methods=['GET', 'POST'], item_id)
+@app.route('/time', methods=['GET', 'POST'])
 def time():
-    if method == 'GET':
-        conn = sqlite3.connect(db) 
-        c = conn.cursor()  
-        results = c.execute('''SELECT item_id, time_estimate FROM timetable;''').fetchall()
-    else:
-        pass
+    conn = sqlite3.connect(db) 
+    c = conn.cursor()  
+    # results = c.execute('''SELECT item_id, time_estimate FROM timetable;''').fetchall()
+    for arg in request.args:
+        try:
+            check = int(arg)
+        except:
+            return "Invalid input."
+        c.execute('''UPDATE timetable SET time_estimate = ? WHERE item_id = ?''', (arg, request.args[arg]))
+    return request.args
