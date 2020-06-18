@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Home Yo</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <title>Home Yo</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+  <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
 
 <body>
-    <!-- <header> -->
-        <!-- <div class="container">
+  <!-- <header> -->
+  <!-- <div class="container">
           <h1 class="logo">First Web App</h1>
           <strong><nav>
             <ul class="menu">
@@ -17,23 +30,47 @@
           </nav></strong>
         </div>
       </header> -->
-    <h1 class="display-1">What's good</h1>
-    <form class="form-group" id = "tasks" action = "/time">
-        {%for item in data%}
-            <label for={{item.id}}>{{item.content}}</label>
-            <input type="text" id={{item.id}} name={{item.id}}><br></br>
-        {% endfor %}
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+  <h1 class="display-1">What's good</h1>
+  <div class="container-fluid">
+    <form id="tasks" action="/time">
+      {%for item in data%}
+      {% if item.is_deleted != 1 and item.checked != 1 and item.due != None%}
+      <div class="row" style="margin: auto">
+        <input class="form-control form-control-sm col-md-1" type="text" id={{item.id}} name={{item.id}}
+          value={{times[item.id]}}>
+        <label for={{item.id}}>...{{item.content}}</label>
+      </div>
+      {% endif %}
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+  <script>
+
+// $(function() {
+//     $('#tasks').keyup(function() {
+//         $.ajax({
+//             url: '/time',
+//             data: $('#tasks').serialize(),
+//             type: 'POST',
+//             success: function(response) {
+//                 console.log(response);
+//             },
+//             error: function(error) {
+//                 console.log(error);
+//             }
+//         });
+//     });
+// });
+
+  </script>
+
 </body>
 
 <script>
-    
+
 </script>
 
 </html>
