@@ -21,9 +21,8 @@ def update_database():
 
     #Ensure all the items are in the database (add new ones)
     for item in api.state['items']:
-        one = item["id"]
         c.execute('''INSERT OR IGNORE INTO timetable (item_id, time_estimate) \
-            VALUES (?, 0);''', (one,))
+            VALUES (?, 0);''', (item["id"],))
     
     #Close database connection
     conn.commit()

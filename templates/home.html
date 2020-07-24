@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Home Yo</title>
+  <title>OverSubscribed</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
@@ -19,51 +19,90 @@
 </head>
 
 <body>
-  <!-- <header> -->
-  <!-- <div class="container">
-          <h1 class="logo">First Web App</h1>
-          <strong><nav>
-            <ul class="menu">
-              <li><a href="{{ url_for('home') }}">Home</a></li>
-              <li><a href="{{ url_for('about') }}">About</a></li>
-            </ul>
-          </nav></strong>
-        </div>
-      </header> -->
 
-  <h1 class="display-1">What's good</h1>
+  <h1 class="display-1">Todoist Time Estimation</h1>
   <div class="container-fluid">
-    <form id="tasks" action="/time">
-      {%for item in data%}
-      {% if item.is_deleted != 1 and item.checked != 1 and item.due != None%}
-      <div class="row" style="margin: auto">
-        <input class="form-control form-control-sm col-md-1" type="text" id={{item.id}} name={{item.id}}
-          value={{times[item.id]}}>
-        <label for={{item.id}}>...{{item.content}}</label>
+    <div class="row">
+      <div class="col">
+        <form id="tasks" action="/time" method="POST">
+          {%for item in data%}
+          {% if item.is_deleted != 1 and item.checked != 1 and item.due != None%}
+          <div class="row" style="margin: auto">
+            <input class="form-control form-control-sm col-md-1 item_input" type="text" id={{item.id}} name={{item.id}}
+              value={{times[item.id]}}>
+            <label for={{item.id}}>...{{item.content}}</label>
+          </div>
+          {% endif %}
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       </div>
-      {% endif %}
-      {% endfor %}
-      <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+      <div class="col">
+        <div id="graph">
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
+    function get_data() {
+      var input_elements = document.getElementsByClassName("item_input");
+      console.log(input_elements)
+      data = []
+      for (element of input_elements) {
+        data.push({ activity: $('label[for="' + element.id + '"]').html(), time: element.value })
+      }
+      return data
+    }
 
-// $(function() {
-//     $('#tasks').keyup(function() {
-//         $.ajax({
-//             url: '/time',
-//             data: $('#tasks').serialize(),
-//             type: 'POST',
-//             success: function(response) {
-//                 console.log(response);
-//             },
-//             error: function(error) {
-//                 console.log(error);
-//             }
-//         });
-//     });
-// });
+    // set the dimensions and margins of the graph
+    var margin = { top: 10, right: 40, bottom: 100, left: 30 },
+      width = 450 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+    // append the svg object to the body of the page
+    var svG = d3.select("#graph")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform",
+        "translate(" + margin.left + "," + margin.top + ")");
+
+    // Create data
+    var data = get_data()
+
+    // X axis
+    var x = d3.scaleBand()
+      .range([0, width])
+      .domain(data.map(function (d) { return d.activity; }))
+      .padding(0.2);
+    svG.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x))
+      .selectAll("text")
+      .attr("transform", "translate(-10,0)rotate(-45)")
+      .style("text-anchor", "end");
+
+    // Y scale and Axis
+    var y = d3.scaleLinear()
+      .domain([0, 40])
+      .range([height, 0]);
+    svG.append("g")
+      .call(d3.axisLeft(y));
+
+    // Add 3 dots for 0, 50 and 100%
+    svG
+      .selectAll("bars")
+      .data(data)
+      .enter()
+      .append("rect")
+      .attr("x", function (d) { return x(d.activity) })
+      .attr("y", function (d) { return y(d.time) })
+      .attr("width", x.bandwidth())
+      .attr("height", function (d) { return height - y(d.time); })
+      .attr("fill", "#69b3a2")
+
 
   </script>
 
