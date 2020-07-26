@@ -1,0 +1,15 @@
+.calendar-div {
+    width: 100%;
+    text-align: center;
+}
+
+table {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  th {
+    background: rgb(95,170,152);
+    outline: 1px solid white;
+    color: white;
+}
