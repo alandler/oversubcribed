@@ -42,6 +42,22 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col calendar-div" style="text-align: center;">
+        <table id = "calendar" style="width:75%">
+          <tr>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
   </div>
 
   <script>
@@ -106,6 +122,31 @@
 
   </script>
 
+  <script>
+    var table = document.getElementById("calendar");
+
+    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+    var firstDay = new Date(y, m, 1);
+    var lastDay = new Date(y, m + 1, 0);
+
+    var start_weekday = firstDay.getDay()
+    var i = -start_weekday+2
+    var offset = 8-start_weekday
+
+    var row = table.insertRow()
+    while (i<=lastDay.getDate()) {
+      var cell = row.insertCell();
+      if (i > 0){
+        cell.innerHTML = i
+      }
+      if ((i-offset)%7 == 0){
+        var row = table.insertRow()
+      }
+      i++;
+    }
+    console.log(firstDay.getDay())
+    console.log(firstDay.getDate())
+  </script>
 </body>
 
 <script>
