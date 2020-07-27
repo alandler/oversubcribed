@@ -45,7 +45,18 @@
     </div>
     <div class="row">
       <div class="col calendar-div">
-        <table id = "calendar" style = "width: 100%;">
+        <table id = "calendar-overlay">
+          <tr>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            <th>Saturday</th>
+            <th>Sunday</th>
+          </tr>
+        </table>
+        <table id = "calendar">
           <tr>
             <th>Monday</th>
             <th>Tuesday</th>
@@ -59,7 +70,6 @@
       </div>
     </div>
   </div>
-  </div>
 
   <script>
     function get_data() {
@@ -71,7 +81,8 @@
       }
       return data
     }
-
+    </script>
+    <script>
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 40, bottom: 100, left: 30 },
       width = 450 - margin.left - margin.right,
@@ -124,7 +135,8 @@
   </script>
 
   <script>
-    var table = document.getElementById("calendar");
+    function create_cal(div_id){
+    var table = document.getElementById(div_id);
 
     var date = new Date(), y = date.getFullYear(), m = date.getMonth();
     var firstDay = new Date(y, m, 1);
@@ -147,6 +159,13 @@
     }
     console.log(firstDay.getDay())
     console.log(firstDay.getDate())
+    }
+    create_cal("calendar-overlay")
+    create_cal("calendar")
+  </script>
+
+  <script>
+    
   </script>
 </body>
 

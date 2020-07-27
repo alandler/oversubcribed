@@ -1,15 +1,47 @@
 .calendar-div {
-    width: 100%;
-    text-align: center;
+    width: 60%;
+    position: absolute;
 }
 
 table {
     table-layout: fixed;
-    width: 100%;
+    width: 60%;
   }
 
-  th {
+th {
     background: rgb(95,170,152);
     outline: 1px solid white;
     color: white;
+}
+
+tr {
+  height: 40px
+}
+
+td{
+  vertical-align: top;
+  padding-left: 10px;
+  background-color: rgba(210, 241, 234, .7);
+  outline: 1px solid white;
+}
+#calendar-overlay{
+  text-align: left;
+  color: gray;
+  font-size: 12px;
+  vertical-align: top;
+  z-index:1; 
+  width: 100%; 
+  position: absolute; 
+  top: 0; 
+  left: 10px
+}
+
+#calendar {
+  text-align: center;
+  z-index:2; 
+  width: 100%; 
+  position: absolute; 
+  top: 0; 
+  left: 10px;
+  vertical-align: center;
 }
