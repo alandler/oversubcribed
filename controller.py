@@ -14,3 +14,6 @@ class Service:
     
     def get_times(self):
         return self.model.get_times()
+
+    def aggregate_by_day(self):
+        return self.model.aggregate_by_day()

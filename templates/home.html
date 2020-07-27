@@ -44,29 +44,43 @@
       </div>
     </div>
     <div class="row">
-      <div class="col calendar-div">
-        <table id = "calendar-overlay">
-          <tr>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <th>Sunday</th>
-          </tr>
-        </table>
-        <table id = "calendar">
-          <tr>
-            <th>Monday</th>
-            <th>Tuesday</th>
-            <th>Wednesday</th>
-            <th>Thursday</th>
-            <th>Friday</th>
-            <th>Saturday</th>
-            <th>Sunday</th>
-          </tr>
-        </table>
+      <div class="col">
+        <div class="calendar-div">
+          <table id="calendar-overlay">
+            <th colspan="7">
+              </td>
+              <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+          </table>
+          <table id="calendar">
+            <th colspan="7" id="month">Month</td>
+              <tr>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+                <th>Saturday</th>
+                <th>Sunday</th>
+              </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>
+          {%for item in days%}
+            <p>{{item}} </p>
+          {% endfor %}
+        </div>
       </div>
     </div>
   </div>
@@ -74,15 +88,14 @@
   <script>
     function get_data() {
       var input_elements = document.getElementsByClassName("item_input");
-      console.log(input_elements)
       data = []
       for (element of input_elements) {
         data.push({ activity: $('label[for="' + element.id + '"]').html(), time: element.value })
       }
       return data
     }
-    </script>
-    <script>
+  </script>
+  <script>
     // set the dimensions and margins of the graph
     var margin = { top: 10, right: 40, bottom: 100, left: 30 },
       width = 450 - margin.left - margin.right,
@@ -135,42 +148,45 @@
   </script>
 
   <script>
-    function create_cal(div_id){
-    var table = document.getElementById(div_id);
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
 
-    var date = new Date(), y = date.getFullYear(), m = date.getMonth();
-    var firstDay = new Date(y, m, 1);
-    var lastDay = new Date(y, m + 1, 0);
+    function create_cal(div_id, fill) {
+      //Access table div, based on input div_id
+      var table = document.getElementById(div_id);
 
-    var start_weekday = firstDay.getDay()
-    var i = -start_weekday+2
-    var offset = 8-start_weekday
+      //Get current date
+      var date = new Date(), y = date.getFullYear(), m = date.getMonth();
+      var firstDay = new Date(y, m, 1);
+      var lastDay = new Date(y, m + 1, 0);
 
-    var row = table.insertRow()
-    while (i<=lastDay.getDate()) {
-      var cell = row.insertCell();
-      if (i > 0){
-        cell.innerHTML = i
+      //Set month in the heading
+      document.getElementById("month").innerHTML = monthNames[m];
+
+      //Dyanmically fill with numbers if needed, otherwise empty cells 
+      var start_weekday = firstDay.getDay()
+      var i = -start_weekday + 2
+      var offset = 8 - start_weekday
+
+      var row = table.insertRow()
+      while (i <= lastDay.getDate()) {
+        var cell = row.insertCell();
+        if (i > 0 && fill == true) {
+          cell.innerHTML = i
+        }
+        if ((i - offset) % 7 == 0) {
+          var row = table.insertRow()
+        }
+        i++;
       }
-      if ((i-offset)%7 == 0){
-        var row = table.insertRow()
-      }
-      i++;
     }
-    console.log(firstDay.getDay())
-    console.log(firstDay.getDate())
-    }
-    create_cal("calendar-overlay")
-    create_cal("calendar")
-  </script>
-
-  <script>
-    
+    create_cal("calendar-overlay", true)
+    create_cal("calendar", false)
   </script>
 </body>
 
 <script>
-
 </script>
 
 </html>

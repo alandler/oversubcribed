@@ -1,6 +1,13 @@
+#month {
+  color: white;
+  font-size: large;
+  background-color: rgb(65, 126, 111);
+}
+
 .calendar-div {
     width: 60%;
-    position: absolute;
+    position: relative;
+    height : 350px;
 }
 
 table {
@@ -12,6 +19,7 @@ th {
     background: rgb(95,170,152);
     outline: 1px solid white;
     color: white;
+    font-size: 12px;
 }
 
 tr {
@@ -29,7 +37,7 @@ td{
   color: gray;
   font-size: 12px;
   vertical-align: top;
-  z-index:1; 
+  z-index:-1; 
   width: 100%; 
   position: absolute; 
   top: 0; 
@@ -38,7 +46,7 @@ td{
 
 #calendar {
   text-align: center;
-  z-index:2; 
+  z-index:0; 
   width: 100%; 
   position: absolute; 
   top: 0; 

@@ -1,6 +1,6 @@
 #User sees the view
 
-from flask import Flask, request, render_template, jsonify, abort, redirect, url_for
+from flask import Flask, request, render_template, jsonify, abort, redirect, url_for, json
 from datetime import datetime
 import todoist
 import sqlite3
@@ -18,7 +18,8 @@ def index():
 def home():
     serv = Service()
     api = serv.sync()
-    return render_template("home.html", data = api.state['items'], times = serv.get_times())
+    return render_template("home.html", data = api.state["items"], \
+        times = serv.get_times(), days = serv.aggregate_by_day())
 
 @app.route('/about')
 def about():
